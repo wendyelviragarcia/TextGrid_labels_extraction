@@ -2,6 +2,7 @@
 #
 # 	Reads all TextGrids in a folder and for each of the files gets:
 #		a) labels from a point tier
+# 		b) time of point
 # 	The output is saved in a tab-separated txt.
 #	
 # 
@@ -16,7 +17,7 @@
 #
 #		Wendy Elvira-García
 #		Laboratory of Phonetics (University of Barcelona)
-#		wendyelviragarcia@gmail.com
+#		wendyelvira @u b. edu
 #		
 #		
 ##############################################################################################################
@@ -26,10 +27,6 @@
 
 
 #Limpia los objetos que te has olvidado en el Praat antes de empezar, sí, tb los que no guardaste.
-select all
-if numberOfSelected() > 0
-	Remove
-endif
 
 if praatVersion < 5363
 exit This script works only in Praat  5363 or later
@@ -58,7 +55,7 @@ if fileReadable (arqout$)
 	deleteFile: arqout$
 endif
 
-	appendFileLine: arqout$, "Filename", tab$, "point-label", tab$, newline$
+	appendFileLine: arqout$, "Filename", tab$, "point-label", tab$, "time", newline$
 
 ##################################	BUCLE	#####################################
 
@@ -88,7 +85,7 @@ for ifile to numberOfFiles
 		for point to numberOfPoints
 			etiquetapunto$ = Get label of point: point_tier, point
 			point_time = Get time of point: point_tier, point
-			appendFile: arqout$, base$, tab$, etiquetapunto$, newline$
+			appendFile: arqout$, base$, tab$, etiquetapunto$, tab$, point_time, newline$
 			
 		endfor
 		

@@ -22,11 +22,7 @@
 
 
 
-#Limpia los objetos que te has olvidado en el Praat antes de empezar, sí, tb los que no guardaste.
-select all
-if numberOfSelected() > 0
-	Remove
-endif
+
 
 if praatVersion < 5363
 exit This script works only in Praat  5363 or later
@@ -55,7 +51,7 @@ if fileReadable (arqout$)
 	deleteFile: arqout$
 endif
 
-	appendFileLine: arqout$, "Filename", tab$, "interval-label", tab$, newline$
+	appendFileLine: arqout$, "Filename", tab$, "interval-label", newline$
 
 ##################################	BUCLE	#####################################
 

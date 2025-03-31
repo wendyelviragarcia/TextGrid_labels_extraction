@@ -1,13 +1,15 @@
-#	label_extraction (January 2014)
+#	label_extraction for point tiers and matching intervals (January 2014)
 #
-# 	Reads sound files and its TextGrid tier for each of the sounds and it can get:
-#		a) labels form a point tier, 
-#		b) labels from a the interval to which the point correspond. 
-# 		
-#	
+# 	Reads sound files and its TextGrid tier for each of the sounds and it gets:
+#		a) the labels from a point tier, 
+#		b) for each of the points in the textgrid, the label from an interval to which the point corresponds
+# 		c) time of the point tier
+
+# 		output: a tab separated file contaning three columns
+#			POINT LABEL | INTERVAL LABEL AT THAT TIME | TIME
 # 
 # 								INSTRUCTIONS
-#	0. You need a .wav with its Textgrid saved in the same folder and with at least 1 point tier and 1 interval tier.
+#	0. You need folder with at least a Textgrid with at least 1 point tier and 1 interval tier.
 #	1. Run
 #	2. FORM EXPLANATIONS:
 #		In the first field you must write the path of the folder where your files are kept
@@ -17,7 +19,7 @@
 #
 #		Wendy Elvira-García
 #		Laboratory of Phonetics (University of Barcelona)
-#		wendyelviragarcia@gmail.com
+#		wendyelvira @ u b . e  du 
 #		
 #		
 ##############################################################################################################
@@ -26,11 +28,6 @@
 
 
 
-#Limpia los objetos que te has olvidado en el Praat antes de empezar, sí, tb los que no guardaste.
-select all
-if numberOfSelected() > 0
-	Remove
-endif
 
 if praatVersion < 5363
 exit This script works only in Praat  5363 or later
@@ -61,7 +58,7 @@ if fileReadable (arqout$)
 	deleteFile: arqout$
 endif
 
-	appendFileLine: arqout$, "Filename", tab$, "point-label", tab$, "interval-label", tab$, newline$
+	appendFileLine: arqout$, "Filename", tab$, "point-label", tab$, "interval-label", tab$, "time-point", newline$
 
 ##################################	BUCLE	#####################################
 
@@ -96,7 +93,7 @@ for ifile to numberOfFiles
 			point_time = Get time of point: point_tier, point
 			interval = Get interval at time: tier_interval, point_time
 			etiquetaintervalo$ = Get label of interval: tier_interval, interval
-			appendFile: arqout$, base$, tab$, etiquetapunto$, tab$, etiquetaintervalo$, newline$
+			appendFile: arqout$, base$, tab$, etiquetapunto$, tab$, etiquetaintervalo$, tab$, point_time, newline$
 			
 		endfor
 		
